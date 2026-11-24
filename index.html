@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entre Nós</title>
+
+  <!-- Fontes: Cormorant Garamond (títulos) e Inter (textos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Nosso estilo -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =====================================================
+       TELA DE LOGIN
+       ===================================================== -->
+  <div id="tela-login" class="tela-login">
+    <main class="cartao">
+      <h1>Entre Nós</h1>
+      <p class="frase">Um espaço só nosso</p>
+      <hr class="divisor">
+
+      <form id="form-login">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" required>
+
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password" required>
+
+        <button type="submit" id="botao-entrar" class="botao">Entrar</button>
+        <p id="mensagem-erro" class="erro" role="alert"></p>
+      </form>
+    </main>
+  </div>
+
+  <!-- =====================================================
+       ÁREA PRIVADA (aparece só depois do login)
+       ===================================================== -->
+  <div id="tela-site" class="oculto">
+
+    <!-- ---------- MENU DE NAVEGAÇÃO ---------- -->
+    <header class="topo">
+      <div class="topo-interno">
+        <span class="marca">Entre Nós</span>
+
+        <nav class="menu" aria-label="Seções do site">
+          <button type="button" data-ir="inicio" class="ativo">Início</button>
+          <button type="button" data-ir="linha-do-tempo">Linha do Tempo</button>
+          <button type="button" data-ir="galeria">Galeria</button>
+          <button type="button" data-ir="capsula">Cápsula do Tempo</button>
+          <button type="button" data-ir="desejos">Lista de Desejos</button>
+          <button type="button" data-ir="playlist">Playlist</button>
+        </nav>
+
+        <button type="button" id="botao-sair" class="botao-mini">Sair</button>
+      </div>
+    </header>
+
+    <main class="conteudo">
+
+      <!-- ================= SEÇÃO 1: INÍCIO ================= -->
+      <section class="secao ativa" data-secao="inicio">
+
+        <!-- Hero -->
+        <div class="hero">
+          <h1 id="titulo-site">Entre Nós</h1>
+          <p id="mensagem-boas-vindas" class="frase">Um espaço só nosso</p>
+        </div>
+
+        <!-- Contador em tempo real -->
+        <div class="contador">
+          <p class="contador-titulo">Juntos há</p>
+          <div class="contador-grade">
+            <div class="contador-item">
+              <span class="contador-numero" id="contador-dias">0</span>
+              <span class="contador-rotulo">Dias</span>
+            </div>
+            <div class="contador-item">
+              <span class="contador-numero" id="contador-horas">00</span>
+              <span class="contador-rotulo">Horas</span>
+            </div>
+            <div class="contador-item">
+              <span class="contador-numero" id="contador-minutos">00</span>
+              <span class="contador-rotulo">Minutos</span>
+            </div>
+            <div class="contador-item">
+              <span class="contador-numero" id="contador-segundos">00</span>
+              <span class="contador-rotulo">Segundos</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Foto de destaque (placeholder) -->
+        <figure class="foto-destaque">
+          <div class="foto-placeholder">
+            <svg class="icone" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="16" rx="2"/>
+              <circle cx="9" cy="10" r="1.8"/>
+              <path d="M3 17l5-4 4 3 3-2 6 4"/>
+            </svg>
+            <span>Nossa foto principal</span>
+          </div>
+        </figure>
+
+        <!-- Cards de navegação -->
+        <div class="explorar">
+          <h2 class="titulo-bloco">Explorar</h2>
+
+          <div class="grade-cards">
+
+            <button type="button" class="card-nav" data-ir="linha-do-tempo">
+              <svg class="icone" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+              <span>Linha do Tempo</span>
+            </button>
+
+            <button type="button" class="card-nav" data-ir="galeria">
+              <svg class="icone" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="16" rx="2"/>
+                <circle cx="9" cy="10" r="1.8"/>
+                <path d="M3 17l5-4 4 3 3-2 6 4"/>
+              </svg>
+              <span>Galeria</span>
+            </button>
+
+            <button type="button" class="card-nav" data-ir="capsula">
+              <svg class="icone" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="M3 7l9 6 9-6"/>
+              </svg>
+              <span>Cápsula do Tempo</span>
+            </button>
+
+            <button type="button" class="card-nav" data-ir="desejos">
+              <svg class="icone" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>
+              </svg>
+              <span>Lista de Desejos</span>
+            </button>
+
+            <button type="button" class="card-nav" data-ir="playlist">
+              <svg class="icone" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9 18V6l11-2v12"/>
+                <circle cx="6.5" cy="18" r="2.5"/>
+                <circle cx="17.5" cy="16" r="2.5"/>
+              </svg>
+              <span>Playlist</span>
+            </button>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SEÇÕES PROVISÓRIAS ================= -->
+      <section class="secao" data-secao="linha-do-tempo">
+        <h2 class="titulo-secao">Nossa Linha do Tempo</h2>
+        <p class="frase centralizado">Em breve.</p>
+      </section>
+
+      <section class="secao" data-secao="galeria">
+        <h2 class="titulo-secao">Galeria de Fotos</h2>
+        <p class="frase centralizado">Em breve.</p>
+      </section>
+
+      <section class="secao" data-secao="capsula">
+        <h2 class="titulo-secao">Cápsula do Tempo</h2>
+        <p class="frase centralizado">Em breve.</p>
+      </section>
+
+      <section class="secao" data-secao="desejos">
+        <h2 class="titulo-secao">Lista de Desejos</h2>
+        <p class="frase centralizado">Em breve.</p>
+      </section>
+
+      <section class="secao" data-secao="playlist">
+        <h2 class="titulo-secao">Nossa Playlist</h2>
+        <p class="frase centralizado">Em breve.</p>
+      </section>
+
+    </main>
+
+    <footer class="rodape">
+      <p id="email-logado"></p>
+    </footer>
+  </div>
+
+  <!-- Biblioteca do Supabase (via CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Login e banco de dados (Etapa 2, não muda) -->
+  <script src="script.js"></script>
+  <!-- Menu de navegação e contador (novo) -->
+  <script src="app.js"></script>
+</body>
+</html>
