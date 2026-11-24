@@ -1,0 +1,508 @@
+/* =====================================================
+   PALETA (se quiser mudar uma cor, é só aqui)
+   ===================================================== */
+:root {
+  --fundo: #17111f;                       /* fundo principal */
+  --fundo-2: #1f1829;                     /* fundo secundário */
+  --texto: #f0e8dc;                       /* creme quente */
+  --texto-suave: rgba(240, 232, 220, 0.6);
+  --dourado: #c9a86a;                     /* só para detalhes */
+  --linha: rgba(201, 168, 106, 0.2);      /* divisores */
+  --dourado-hover: rgba(201, 168, 106, 0.12);
+  --erro: #d99a9a;                        /* rosado suave */
+
+  --fonte-titulo: "Cormorant Garamond", Georgia, serif;
+  --fonte-texto: "Inter", system-ui, sans-serif;
+  --raio: 6px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--fundo);
+  background-image: radial-gradient(ellipse at 50% 0%, var(--fundo-2) 0%, var(--fundo) 65%);
+  background-attachment: fixed;
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+.oculto {
+  display: none !important;
+}
+
+/* Contorno discreto para quem navega pelo teclado */
+:focus-visible {
+  outline: 1px solid var(--dourado);
+  outline-offset: 3px;
+}
+
+/* =====================================================
+   ANIMAÇÃO: aparece suavemente (fade in)
+   ===================================================== */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================
+   TEXTOS BASE
+   ===================================================== */
+h1,
+h2 {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--texto);
+}
+
+.frase {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--texto-suave);
+}
+
+.centralizado {
+  text-align: center;
+}
+
+.divisor {
+  border: none;
+  height: 1px;
+  margin: 28px 0 8px;
+  background: var(--linha);
+}
+
+/* =====================================================
+   TELA DE LOGIN
+   ===================================================== */
+.tela-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.cartao {
+  width: 100%;
+  max-width: 400px;
+  padding: 52px 40px 44px;
+  text-align: center;
+  background: var(--fundo-2);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  animation: aparecer 0.9s ease both;
+}
+
+.cartao h1 {
+  font-size: 2.6rem;
+}
+
+.cartao .frase {
+  margin-top: 10px;
+}
+
+form {
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin: 24px 0 4px;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+input {
+  width: 100%;
+  padding: 10px 0;
+  background: transparent;
+  color: var(--texto);
+  border: none;
+  border-bottom: 1px solid var(--linha);
+  border-radius: 0;
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input::placeholder {
+  color: rgba(240, 232, 220, 0.25);
+}
+
+input:focus {
+  border-bottom-color: var(--dourado);
+}
+
+/* Impede o navegador de pintar o campo de azul/branco ao autopreencher */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--texto);
+  box-shadow: 0 0 0 1000px var(--fundo-2) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.erro {
+  min-height: 1.2em;
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--erro);
+}
+
+/* =====================================================
+   BOTÕES (transparente + borda dourada)
+   ===================================================== */
+.botao,
+.botao-mini {
+  background: transparent;
+  color: var(--dourado);
+  border: 1px solid var(--dourado);
+  border-radius: var(--raio);
+  font-family: var(--fonte-texto);
+  font-weight: 400;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.botao:hover,
+.botao-mini:hover {
+  background: var(--dourado-hover);
+}
+
+.botao:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.botao {
+  width: 100%;
+  margin-top: 36px;
+  padding: 13px;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+}
+
+.botao-mini {
+  padding: 8px 20px;
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+}
+
+/* =====================================================
+   MENU DE NAVEGAÇÃO (topo)
+   ===================================================== */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(23, 17, 31, 0.88);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linha);
+}
+
+.topo-interno {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+
+.marca {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--texto);
+  white-space: nowrap;
+}
+
+.menu {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.menu button {
+  padding: 6px 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--texto-suave);
+  font-family: var(--fonte-texto);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.menu button:hover {
+  color: var(--texto);
+}
+
+.menu button.ativo {
+  color: var(--texto);
+  border-bottom-color: var(--dourado);
+}
+
+/* =====================================================
+   CONTEÚDO E SEÇÕES
+   ===================================================== */
+.conteudo {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Só a seção "ativa" aparece */
+.secao {
+  display: none;
+}
+
+.secao.ativa {
+  display: block;
+  animation: aparecer 0.8s ease both;
+}
+
+.titulo-secao {
+  padding: 80px 0 16px;
+  text-align: center;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+}
+
+.rodape {
+  padding: 56px 24px 40px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--texto-suave);
+}
+
+/* =====================================================
+   SEÇÃO INÍCIO: HERO
+   ===================================================== */
+.hero {
+  padding: 80px 0 56px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(3.4rem, 11vw, 6.5rem);
+}
+
+.hero .frase {
+  margin-top: 14px;
+  font-size: clamp(1.25rem, 3.5vw, 1.7rem);
+}
+
+/* =====================================================
+   SEÇÃO INÍCIO: CONTADOR
+   ===================================================== */
+.contador {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 36px 0 40px;
+  text-align: center;
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+}
+
+.contador-titulo {
+  margin-bottom: 28px;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--texto-suave);
+}
+
+.contador-grade {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.contador-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.contador-item + .contador-item {
+  border-left: 1px solid var(--linha);
+}
+
+.contador-numero {
+  font-family: var(--fonte-titulo);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 8vw, 4.4rem);
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--texto);
+}
+
+.contador-rotulo {
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+/* =====================================================
+   SEÇÃO INÍCIO: FOTO DE DESTAQUE
+   ===================================================== */
+.foto-destaque {
+  max-width: 720px;
+  margin: 64px auto;
+}
+
+.foto-placeholder {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(240, 232, 220, 0.05);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: var(--texto-suave);
+}
+
+/* Quando colocarmos a foto de verdade (<img>), ela usa este estilo */
+.foto-destaque img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+}
+
+.icone {
+  color: var(--dourado);
+}
+
+/* =====================================================
+   SEÇÃO INÍCIO: CARDS DE NAVEGAÇÃO
+   ===================================================== */
+.explorar {
+  padding-bottom: 24px;
+}
+
+.titulo-bloco {
+  margin-bottom: 28px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.grade-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.card-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 30px 12px;
+  background: var(--fundo-2);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  color: var(--texto);
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.card-nav:hover {
+  background: rgba(201, 168, 106, 0.06);
+  border-color: rgba(201, 168, 106, 0.5);
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   CELULAR E TELAS MENORES
+   ===================================================== */
+@media (max-width: 1000px) {
+  /* Menu vai para uma segunda linha, rolando de lado se precisar */
+  .menu {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .menu::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .grade-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* O quinto card ocupa a linha inteira, para ficar simétrico */
+  .card-nav:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .cartao {
+    padding: 44px 28px 36px;
+  }
+
+  .hero {
+    padding: 56px 0 40px;
+  }
+
+  .contador-rotulo {
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+  }
+}
+
+/* Respeita quem prefere sem animações */
+@media (prefers-reduced-motion: reduce) {
+  .cartao,
+  .secao.ativa {
+    animation: none;
+  }
+
+  .card-nav {
+    transition: none;
+  }
+}
