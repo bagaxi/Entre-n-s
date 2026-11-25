@@ -126,7 +126,8 @@ label {
   color: var(--texto-suave);
 }
 
-input {
+input,
+textarea {
   width: 100%;
   padding: 10px 0;
   background: transparent;
@@ -141,11 +142,13 @@ input {
   transition: border-color 0.3s ease;
 }
 
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: rgba(240, 232, 220, 0.25);
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   border-bottom-color: var(--dourado);
 }
 
@@ -492,6 +495,725 @@ input:-webkit-autofill:focus {
   .contador-rotulo {
     font-size: 0.55rem;
     letter-spacing: 1px;
+  }
+}
+
+/* =====================================================
+   LINHA DO TEMPO
+   ===================================================== */
+.acoes-secao {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 32px 0 8px;
+}
+
+.status-secao {
+  margin: 28px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.status-secao:empty {
+  display: none;
+}
+
+.timeline {
+  position: relative;
+  list-style: none;
+  max-width: 640px;
+  margin: 40px auto 24px;
+  padding-left: 36px;
+}
+
+/* A linha vertical */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--linha);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 44px;
+  animation: aparecer 0.6s ease both;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+/* A bolinha de cada momento */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -36px;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--fundo);
+  border: 1px solid var(--dourado);
+}
+
+.timeline-data {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dourado);
+}
+
+.timeline-titulo {
+  margin-top: 8px;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  color: var(--texto);
+}
+
+.timeline-descricao {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  white-space: pre-line; /* respeita as quebras de linha digitadas */
+  color: var(--texto-suave);
+}
+
+/* =====================================================
+   JANELA (MODAL) DE NOVO MOMENTO
+   ===================================================== */
+@keyframes esmaecer {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  margin: auto;
+  width: calc(100% - 32px);
+  max-width: 440px;
+  padding: 0;
+  background: var(--fundo-2);
+  color: var(--texto);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.modal[open] {
+  animation: aparecer 0.4s ease both;
+}
+
+.modal::backdrop {
+  background: rgba(23, 17, 31, 0.82);
+}
+
+.modal[open]::backdrop {
+  animation: esmaecer 0.4s ease both;
+}
+
+.modal form,
+.modal-corpo {
+  padding: 36px 32px 28px;
+}
+
+.modal-titulo {
+  text-align: center;
+  font-size: 2rem;
+}
+
+textarea {
+  display: block;
+  resize: vertical;
+  min-height: 96px;
+  line-height: 1.6;
+  font-family: var(--fonte-texto);
+}
+
+input[type="date"] {
+  color-scheme: dark; /* calendário escuro */
+}
+
+.modal-acoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.modal-acoes .botao-mini {
+  padding: 13px 20px;
+}
+
+.modal-acoes .botao {
+  flex: 1;
+  width: auto;
+  margin-top: 0;
+}
+
+/* =====================================================
+   GALERIA DE FOTOS
+   ===================================================== */
+.galeria-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 40px 0 24px;
+}
+
+.foto-item {
+  display: block;
+  padding: 8px; /* o "respiro" da moldura (passe-partout) */
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--fundo-2);
+  border: 1px solid rgba(201, 168, 106, 0.55); /* linha dourada externa */
+  border-radius: 4px;
+  cursor: pointer;
+  animation: aparecer 0.6s ease both;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.foto-item:hover {
+  border-color: var(--dourado);
+  transform: translateY(-2px);
+}
+
+.foto-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid rgba(201, 168, 106, 0.3); /* linha dourada interna */
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.foto-item img.carregada {
+  opacity: 1;
+}
+
+/* Janela da foto grande */
+.modal-foto {
+  max-width: 760px;
+}
+
+.visualizador {
+  padding: 20px 20px 24px;
+  text-align: center;
+}
+
+.visualizador img {
+  display: block;
+  width: 100%;
+  max-height: 68vh;
+  object-fit: contain;
+  border: 1px solid rgba(201, 168, 106, 0.3); /* linha dourada interna */
+  border-radius: 2px;
+}
+
+.visualizador-info {
+  margin-top: 20px;
+}
+
+.visualizador-legenda {
+  margin-bottom: 8px;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: var(--texto);
+}
+
+.visualizador-acoes {
+  justify-content: center;
+}
+
+/* Moldura (passe-partout) da foto grande */
+.visualizador-moldura {
+  padding: 10px;
+  background: var(--fundo);
+  border: 1px solid rgba(201, 168, 106, 0.55); /* linha dourada externa */
+  border-radius: 4px;
+}
+
+/* Blocos da galeria (álbuns e fotos) */
+.bloco-galeria {
+  margin-top: 40px;
+}
+
+.bloco-galeria .galeria-grade {
+  margin-top: 24px;
+}
+
+.subtitulo-galeria {
+  text-align: center;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--texto);
+}
+
+/* Barra do álbum aberto (voltar, editar, excluir) */
+.barra-album {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.barra-album .timeline-acoes {
+  margin-top: 0;
+  justify-content: center;
+}
+
+/* Cartão de álbum: capa com moldura + nome + quantidade */
+.album-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0;
+  background: none;
+  border: none;
+  text-align: center;
+  color: var(--texto);
+  cursor: pointer;
+  animation: aparecer 0.6s ease both;
+}
+
+.album-capa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 5;
+  padding: 8px;
+  overflow: hidden;
+  background: var(--fundo-2);
+  border: 1px solid rgba(201, 168, 106, 0.55);
+  border-radius: 4px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.album-capa img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid rgba(201, 168, 106, 0.3);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.album-capa img.carregada {
+  opacity: 1;
+}
+
+.album-card:hover .album-capa {
+  border-color: var(--dourado);
+  transform: translateY(-2px);
+}
+
+.album-nome {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.album-qtd {
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+/* Lista de escolha (álbum) */
+select {
+  width: 100%;
+  padding: 10px 28px 10px 0;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23c9a86a' stroke-width='1.2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  color: var(--texto);
+  border: none;
+  border-bottom: 1px solid var(--linha);
+  border-radius: 0;
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  font-weight: 300;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  border-bottom-color: var(--dourado);
+}
+
+select option {
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .album-card {
+    animation: none;
+  }
+
+  .album-capa {
+    transition: none;
+  }
+}
+
+/* Campo de escolher arquivo */
+input[type="file"] {
+  padding: 12px 0;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+input[type="file"]::file-selector-button {
+  margin-right: 14px;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--dourado);
+  border: 1px solid var(--dourado);
+  border-radius: var(--raio);
+  font-family: var(--fonte-texto);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background: var(--dourado-hover);
+}
+
+.dica {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--texto-suave);
+}
+
+@media (max-width: 520px) {
+  .galeria-grade {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foto-item {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* =====================================================
+   CÁPSULA DO TEMPO (CARTAS)
+   ===================================================== */
+.cartas-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.carta-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 24px;
+  text-align: left;
+  background: var(--fundo-2);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  color: var(--texto);
+  cursor: pointer;
+  animation: aparecer 0.6s ease both;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.carta-card:hover {
+  border-color: rgba(201, 168, 106, 0.5);
+  transform: translateY(-2px);
+}
+
+.carta-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.carta-topo .icone {
+  flex-shrink: 0;
+}
+
+.carta-status {
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dourado);
+}
+
+.carta-card-titulo {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.55rem;
+  line-height: 1.2;
+}
+
+.carta-card-detalhe {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--texto-suave);
+}
+
+.carta-card-dica {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--texto-suave);
+}
+
+/* Janela da carta */
+.modal-carta {
+  max-width: 560px;
+}
+
+.carta-corpo {
+  padding: 36px 32px 28px;
+  text-align: center;
+}
+
+.carta-corpo .timeline-data {
+  margin-bottom: 10px;
+}
+
+.carta-meta {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--texto-suave);
+}
+
+.carta-dica {
+  margin-top: 18px;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  color: var(--texto-suave);
+}
+
+.carta-corpo form {
+  margin-top: 12px;
+}
+
+.carta-leitura {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--linha);
+  text-align: left;
+  white-space: pre-wrap; /* respeita parágrafos e quebras de linha */
+  font-family: var(--fonte-titulo);
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: var(--texto);
+}
+
+.carta-corpo .timeline-acoes {
+  justify-content: center;
+  margin-top: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carta-card {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* =====================================================
+   FOTO PRINCIPAL (página inicial)
+   ===================================================== */
+.foto-principal-moldura {
+  display: block;
+  width: fit-content; /* a moldura abraça a foto, sem sobras */
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 12px;
+  background: var(--fundo-2);
+  border: 1px solid rgba(201, 168, 106, 0.55); /* linha dourada externa */
+  border-radius: 4px;
+  animation: aparecer 0.8s ease both;
+}
+
+.foto-principal-moldura img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 78vh;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border: 1px solid rgba(201, 168, 106, 0.3); /* linha dourada interna */
+  border-radius: 2px;
+}
+
+.foto-principal-acoes {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.acao-texto:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foto-principal-moldura {
+    animation: none;
+  }
+}
+
+/* =====================================================
+   CÁPSULA: ETIQUETAS (TAGS) E FILTRO POR TIPO
+   ===================================================== */
+.filtro-cartas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 22px;
+  margin-top: 28px;
+}
+
+.filtro-cartas button {
+  padding: 6px 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--texto-suave);
+  font-family: var(--fonte-texto);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.filtro-cartas button:hover {
+  color: var(--texto);
+}
+
+.filtro-cartas button.ativo {
+  color: var(--texto);
+  border-bottom-color: var(--dourado);
+}
+
+.carta-tag {
+  display: inline-block;
+  padding: 3px 9px;
+  border: 1px solid rgba(201, 168, 106, 0.4);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dourado);
+}
+
+/* "Carta Normal" fica mais discreta que as de "Abra quando..." */
+.carta-tag.normal {
+  border-color: var(--linha);
+  color: var(--texto-suave);
+}
+
+.carta-tag-linha {
+  margin-top: 14px;
+}
+
+/* Textos de ação em cada momento (Editar / Excluir) */
+.timeline-acoes {
+  display: flex;
+  gap: 22px;
+  margin-top: 16px;
+}
+
+.acao-texto {
+  padding: 0 0 2px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  color: var(--texto-suave);
+  font-family: var(--fonte-texto);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.acao-texto:hover {
+  color: var(--dourado);
+  border-bottom-color: var(--linha);
+}
+
+.acao-texto.perigo:hover {
+  color: var(--erro);
+}
+
+/* Texto da janela de confirmação */
+.modal-texto {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--texto-suave);
+}
+
+/* Botão de excluir: rosa suave, sem gritar */
+.botao-perigo {
+  color: var(--erro);
+  border-color: var(--erro);
+}
+
+.botao-perigo:hover {
+  background: rgba(217, 154, 154, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-item,
+  .modal[open],
+  .modal[open]::backdrop {
+    animation: none;
   }
 }
 

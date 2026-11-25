@@ -94,9 +94,15 @@
           </div>
         </div>
 
-        <!-- Foto de destaque (placeholder) -->
+        <!-- Foto de destaque (a foto principal de vocês) -->
         <figure class="foto-destaque">
-          <div class="foto-placeholder">
+          <!-- Aparece quando já existe uma foto escolhida -->
+          <div id="foto-principal-moldura" class="foto-principal-moldura oculto">
+            <img id="foto-principal-img" alt="Nós dois">
+          </div>
+
+          <!-- Aparece enquanto não há foto -->
+          <div id="foto-principal-placeholder" class="foto-placeholder">
             <svg class="icone" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="3" y="4" width="18" height="16" rx="2"/>
               <circle cx="9" cy="10" r="1.8"/>
@@ -104,6 +110,13 @@
             </svg>
             <span>Nossa foto principal</span>
           </div>
+
+          <p id="foto-principal-status" class="status-secao"></p>
+
+          <div class="timeline-acoes foto-principal-acoes">
+            <button type="button" id="botao-trocar-foto-principal" class="acao-texto">Escolher foto</button>
+          </div>
+          <input type="file" id="foto-principal-arquivo" accept="image/*" class="oculto">
         </figure>
 
         <!-- Cards de navegação -->
@@ -158,19 +171,83 @@
       </section>
 
       <!-- ================= SEÇÕES PROVISÓRIAS ================= -->
+      <!-- ================= SEÇÃO 2: LINHA DO TEMPO ================= -->
       <section class="secao" data-secao="linha-do-tempo">
         <h2 class="titulo-secao">Nossa Linha do Tempo</h2>
-        <p class="frase centralizado">Em breve.</p>
+        <p class="frase centralizado">Os momentos que contam a nossa história</p>
+
+        <div class="acoes-secao">
+          <button type="button" id="botao-novo-momento" class="botao-mini">Adicionar momento</button>
+        </div>
+
+        <p id="timeline-status" class="status-secao"></p>
+        <ol id="timeline-lista" class="timeline"></ol>
       </section>
 
+      <!-- ================= SEÇÃO 3: GALERIA DE FOTOS ================= -->
       <section class="secao" data-secao="galeria">
-        <h2 class="titulo-secao">Galeria de Fotos</h2>
-        <p class="frase centralizado">Em breve.</p>
+        <h2 class="titulo-secao" id="galeria-titulo">Galeria de Fotos</h2>
+        <p class="frase centralizado" id="galeria-subtitulo">Os dias que queremos guardar</p>
+
+        <!-- Aparece só quando um álbum está aberto -->
+        <div id="barra-album" class="barra-album oculto">
+          <button type="button" id="botao-voltar-galeria" class="acao-texto">← Voltar à galeria</button>
+          <div class="timeline-acoes">
+            <button type="button" id="botao-editar-album" class="acao-texto">Editar álbum</button>
+            <button type="button" id="botao-excluir-album" class="acao-texto perigo">Excluir álbum</button>
+          </div>
+        </div>
+
+        <div class="acoes-secao">
+          <button type="button" id="botao-novo-album" class="botao-mini">Novo álbum</button>
+          <button type="button" id="botao-nova-foto" class="botao-mini">Adicionar fotos</button>
+        </div>
+
+        <p id="galeria-status" class="status-secao"></p>
+
+        <!-- Álbuns -->
+        <div id="bloco-albuns" class="bloco-galeria oculto">
+          <h3 class="subtitulo-galeria">Álbuns</h3>
+          <div id="albuns-grade" class="galeria-grade"></div>
+        </div>
+
+        <!-- Fotos (as avulsas, ou as do álbum aberto) -->
+        <div id="bloco-fotos" class="bloco-galeria oculto">
+          <h3 class="subtitulo-galeria" id="titulo-fotos">Fotos avulsas</h3>
+          <div id="galeria-grade" class="galeria-grade"></div>
+        </div>
       </section>
 
+      <!-- ================= SEÇÃO 4: CÁPSULA DO TEMPO ================= -->
       <section class="secao" data-secao="capsula">
         <h2 class="titulo-secao">Cápsula do Tempo</h2>
-        <p class="frase centralizado">Em breve.</p>
+        <p class="frase centralizado">Palavras guardadas para o momento certo</p>
+
+        <div class="acoes-secao">
+          <button type="button" id="botao-nova-carta" class="botao-mini">Escrever carta</button>
+        </div>
+
+        <!-- Filtro por tipo de carta -->
+        <div id="filtro-cartas" class="filtro-cartas oculto" role="group" aria-label="Filtrar cartas por tipo">
+          <button type="button" data-filtro="todas" class="ativo">Todas</button>
+          <button type="button" data-filtro="saudade">Saudade</button>
+          <button type="button" data-filtro="triste">Triste</button>
+          <button type="button" data-filtro="data_especial">Data especial</button>
+          <button type="button" data-filtro="brigar">Brigar</button>
+          <button type="button" data-filtro="normal">Normal</button>
+        </div>
+
+        <p id="cartas-status" class="status-secao"></p>
+
+        <div id="bloco-cartas-para-mim" class="bloco-galeria oculto">
+          <h3 class="subtitulo-galeria">Para você</h3>
+          <div id="cartas-para-mim" class="cartas-grade"></div>
+        </div>
+
+        <div id="bloco-cartas-minhas" class="bloco-galeria oculto">
+          <h3 class="subtitulo-galeria">Escritas por você</h3>
+          <div id="cartas-minhas" class="cartas-grade"></div>
+        </div>
       </section>
 
       <section class="secao" data-secao="desejos">
@@ -184,6 +261,222 @@
       </section>
 
     </main>
+
+    <!-- Janela para adicionar um momento na linha do tempo -->
+    <dialog id="modal-momento" class="modal">
+      <form id="form-momento">
+        <h2 class="modal-titulo" id="modal-titulo-momento">Novo momento</h2>
+
+        <label for="momento-titulo">Título</label>
+        <input type="text" id="momento-titulo" maxlength="80" placeholder="Ex.: Nosso primeiro encontro" required>
+
+        <label for="momento-data">Data</label>
+        <input type="date" id="momento-data" required>
+
+        <label for="momento-descricao">Descrição</label>
+        <textarea id="momento-descricao" rows="4" maxlength="1000" placeholder="Conte como foi (opcional)"></textarea>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-momento" class="botao-mini">Cancelar</button>
+          <button type="submit" id="botao-salvar-momento" class="botao">Salvar</button>
+        </div>
+        <p id="momento-erro" class="erro" role="alert"></p>
+      </form>
+    </dialog>
+
+    <!-- Janela de confirmação para excluir um momento -->
+    <dialog id="modal-confirmar" class="modal">
+      <div class="modal-corpo">
+        <h2 class="modal-titulo">Excluir momento?</h2>
+        <p id="confirmar-texto" class="modal-texto"></p>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-exclusao" class="botao-mini">Cancelar</button>
+          <button type="button" id="botao-confirmar-exclusao" class="botao botao-perigo">Excluir</button>
+        </div>
+        <p id="confirmar-erro" class="erro" role="alert"></p>
+      </div>
+    </dialog>
+
+    <!-- Janela para adicionar fotos / editar legenda -->
+    <dialog id="modal-galeria" class="modal">
+      <form id="form-galeria">
+        <h2 class="modal-titulo" id="modal-titulo-galeria">Novas fotos</h2>
+
+        <div id="grupo-arquivo">
+          <label for="galeria-arquivo">Fotos</label>
+          <input type="file" id="galeria-arquivo" accept="image/*" multiple>
+        </div>
+
+        <label for="galeria-legenda">Legenda</label>
+        <input type="text" id="galeria-legenda" maxlength="120" placeholder="Opcional">
+
+        <label for="galeria-data">Data da foto</label>
+        <input type="date" id="galeria-data">
+
+        <div id="grupo-album">
+          <label for="galeria-album">Álbum</label>
+          <select id="galeria-album"></select>
+        </div>
+
+        <p id="galeria-dica" class="dica">Com várias fotos, a legenda, a data e o álbum valem para todas.</p>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-galeria" class="botao-mini">Cancelar</button>
+          <button type="submit" id="botao-salvar-galeria" class="botao">Salvar</button>
+        </div>
+        <p id="galeria-erro" class="erro" role="alert"></p>
+      </form>
+    </dialog>
+
+    <!-- Janela para ver a foto grande -->
+    <dialog id="modal-visualizador" class="modal modal-foto">
+      <div class="visualizador">
+        <div class="visualizador-moldura">
+          <img id="visualizador-imagem" alt="">
+        </div>
+        <div class="visualizador-info">
+          <p id="visualizador-legenda" class="visualizador-legenda"></p>
+          <time id="visualizador-data" class="timeline-data"></time>
+        </div>
+        <div class="timeline-acoes visualizador-acoes">
+          <button type="button" id="botao-editar-foto" class="acao-texto">Editar</button>
+          <button type="button" id="botao-excluir-foto" class="acao-texto perigo">Excluir</button>
+          <button type="button" id="botao-fechar-visualizador" class="acao-texto">Fechar</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Janela de confirmação para excluir uma foto -->
+    <dialog id="modal-confirmar-foto" class="modal">
+      <div class="modal-corpo">
+        <h2 class="modal-titulo">Excluir foto?</h2>
+        <p class="modal-texto">Esta foto será apagada para sempre. Essa ação não pode ser desfeita.</p>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-exclusao-foto" class="botao-mini">Cancelar</button>
+          <button type="button" id="botao-confirmar-exclusao-foto" class="botao botao-perigo">Excluir</button>
+        </div>
+        <p id="confirmar-foto-erro" class="erro" role="alert"></p>
+      </div>
+    </dialog>
+
+    <!-- Janela para criar / editar um álbum -->
+    <dialog id="modal-album" class="modal">
+      <form id="form-album">
+        <h2 class="modal-titulo" id="modal-titulo-album">Novo álbum</h2>
+
+        <label for="album-nome">Nome</label>
+        <input type="text" id="album-nome" maxlength="60" placeholder="Ex.: Nossa primeira viagem" required>
+
+        <label for="album-descricao">Descrição</label>
+        <textarea id="album-descricao" rows="3" maxlength="300" placeholder="Opcional"></textarea>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-album" class="botao-mini">Cancelar</button>
+          <button type="submit" id="botao-salvar-album" class="botao">Salvar</button>
+        </div>
+        <p id="album-erro" class="erro" role="alert"></p>
+      </form>
+    </dialog>
+
+    <!-- Janela de confirmação para excluir um álbum -->
+    <dialog id="modal-confirmar-album" class="modal">
+      <div class="modal-corpo">
+        <h2 class="modal-titulo">Excluir álbum?</h2>
+        <p id="confirmar-album-texto" class="modal-texto"></p>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-exclusao-album" class="botao-mini">Cancelar</button>
+          <button type="button" id="botao-confirmar-exclusao-album" class="botao botao-perigo">Excluir</button>
+        </div>
+        <p id="confirmar-album-erro" class="erro" role="alert"></p>
+      </div>
+    </dialog>
+
+    <!-- Janela para ver / abrir uma carta -->
+    <dialog id="modal-carta" class="modal modal-carta">
+      <div class="carta-corpo">
+        <time id="carta-status" class="timeline-data"></time>
+        <h2 id="carta-titulo" class="modal-titulo"></h2>
+        <div class="carta-tag-linha"><span id="carta-tag" class="carta-tag"></span></div>
+        <p id="carta-meta" class="carta-meta"></p>
+        <p id="carta-dica" class="carta-dica oculto"></p>
+
+        <!-- Campo da senha (só para cartas de outra pessoa já liberadas) -->
+        <form id="form-senha-carta" class="oculto">
+          <label for="carta-senha">Senha</label>
+          <input type="password" id="carta-senha" autocomplete="new-password" required>
+          <p id="carta-erro" class="erro" role="alert"></p>
+          <div class="modal-acoes">
+            <button type="button" id="botao-cancelar-senha-carta" class="botao-mini">Cancelar</button>
+            <button type="submit" id="botao-abrir-carta" class="botao">Abrir carta</button>
+          </div>
+        </form>
+
+        <!-- O texto da carta, depois de aberta -->
+        <div id="carta-leitura" class="carta-leitura oculto"></div>
+
+        <div id="carta-acoes" class="timeline-acoes">
+          <button type="button" id="botao-editar-carta" class="acao-texto oculto">Editar</button>
+          <button type="button" id="botao-excluir-carta" class="acao-texto perigo oculto">Excluir</button>
+          <button type="button" id="botao-fechar-carta" class="acao-texto">Fechar</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Janela para escrever / editar uma carta -->
+    <dialog id="modal-escrever-carta" class="modal">
+      <form id="form-carta">
+        <h2 class="modal-titulo" id="modal-titulo-escrever-carta">Nova carta</h2>
+
+        <label for="carta-campo-categoria">Tipo de carta</label>
+        <select id="carta-campo-categoria">
+          <option value="normal">Carta Normal</option>
+          <option value="saudade">Abra quando sentir saudade</option>
+          <option value="triste">Abra quando estiver triste</option>
+          <option value="data_especial">Abra em uma data especial</option>
+          <option value="brigar">Abra se a gente brigar</option>
+        </select>
+
+        <label for="carta-campo-titulo">Título</label>
+        <input type="text" id="carta-campo-titulo" maxlength="80" placeholder="Ex.: Para quando você duvidar" required>
+
+        <label for="carta-campo-texto">Carta</label>
+        <textarea id="carta-campo-texto" rows="8" maxlength="5000" placeholder="Escreva aqui..." required></textarea>
+
+        <label for="carta-campo-senha">Senha</label>
+        <input type="text" id="carta-campo-senha" maxlength="60" autocomplete="off">
+
+        <label for="carta-campo-dica">Dica para a senha</label>
+        <input type="text" id="carta-campo-dica" maxlength="160" placeholder="Opcional: uma pista para ajudar a descobrir">
+
+        <label for="carta-campo-data">Data de abertura</label>
+        <input type="date" id="carta-campo-data" required>
+
+        <p class="dica">A carta abre à meia-noite desse dia (horário de Brasília). Quem a escreveu pode lê-la sempre. Quem recebe precisa da senha.</p>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-carta" class="botao-mini">Cancelar</button>
+          <button type="submit" id="botao-salvar-carta" class="botao">Salvar</button>
+        </div>
+        <p id="carta-form-erro" class="erro" role="alert"></p>
+      </form>
+    </dialog>
+
+    <!-- Janela de confirmação para excluir uma carta -->
+    <dialog id="modal-confirmar-carta" class="modal">
+      <div class="modal-corpo">
+        <h2 class="modal-titulo">Excluir carta?</h2>
+        <p id="confirmar-carta-texto" class="modal-texto"></p>
+
+        <div class="modal-acoes">
+          <button type="button" id="botao-cancelar-exclusao-carta" class="botao-mini">Cancelar</button>
+          <button type="button" id="botao-confirmar-exclusao-carta" class="botao botao-perigo">Excluir</button>
+        </div>
+        <p id="confirmar-carta-erro" class="erro" role="alert"></p>
+      </div>
+    </dialog>
 
     <footer class="rodape">
       <p id="email-logado"></p>
